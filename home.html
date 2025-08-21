@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to SmartInnings</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+  <script>
+    function showTutorial() {
+      document.getElementById('video-tutorial').classList.add('show');
+    }
+  </script>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="home-container">
+    <h1>Welcome to <span class="highlight">SmartInnings</span></h1>
+    <p class="tagline">AI-Powered IPL Victory Predictor</p>
+
+
+    <div class="button-group">
+      <a href="/predict" class="btn primary">🔮 Start Prediction</a>
+      <button class="btn" onclick="showTutorial()">📖 How It Works</button>
+    </div>
+
+    <div id="video-tutorial">
+      <video width="100%" controls>
+        <source src="{{ url_for('static', filename='videos/smartinnings.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+  <div class="footer-bar">
+  “Every run, every wicket, every moment — predicted smarter.”
+</div>
+</body>
+</html>

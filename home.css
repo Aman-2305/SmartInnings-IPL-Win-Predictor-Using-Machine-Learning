@@ -1,0 +1,142 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+  color: #ffffff;
+}
+
+.overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.home-container {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.logo {
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.8rem;
+  margin: 0;
+}
+
+.highlight {
+  color: #facc15;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #c3c3c3;
+}
+
+.button-group {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn {
+  background-color: #1f1f1f;
+  color: #facc15;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  border: 2px solid #facc15;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #facc15;
+  color: #1f1f1f;
+}
+
+.btn.primary {
+  background-color: #facc15;
+  color: #1f1f1f;
+}
+
+section {
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: auto;
+  text-align: left;
+  border-top: 1px solid #444;
+}
+
+section h2 {
+  color: #facc15;
+  margin-bottom: 10px;
+}
+
+section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+section ul li {
+  margin: 10px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+section ul li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: #facc15;
+}
+
+#video-tutorial {
+  display: none;
+  margin-top: 30px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.6s ease-in-out;
+  transform: translateX(100%);
+}
+
+#video-tutorial.show {
+  display: block;
+  transform: translateX(0);
+}
+
+.footer-bar {
+  background-color: #0f0c29; 
+  color: #facc15;
+  text-align: center;
+  font-size: 13px;
+  padding: 8px 0;
+  font-style: italic;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+#video-tutorial {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#video-tutorial.show {
+  display: block;
+  opacity: 1;
+}

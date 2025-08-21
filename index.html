@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartInnings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function updateTeam2Options() {
+            const team1 = document.getElementById('team1Select').value;
+            const team2Options = document.getElementById('team2Select').options;
+            for (let option of team2Options) {
+                option.disabled = option.value === team1;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="overlay">
+        <div class="container">
+            <h1><span class="emoji">🏏</span> SmartInnings</h1>
+
+            <form method="post">
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="team1">Select Batting Team</label>
+                        <select id="team1Select" name="team1" onchange="updateTeam2Options()" required>
+                            <option value="">--- select ---</option>
+                            {% for team in teams %}
+                                <option value="{{ team }}" {% if request.form.get('team1') == team %}selected{% endif %} >{{ team }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="team2">Select Bowling Team</label>
+                        <select id="team2Select" name="team2" required>
+                            <option value="">--- select ---</option>
+                            {% for team in teams %}
+                                <option value="{{ team }}" {% if request.form.get('team2') == team %}selected{% endif %} >{{ team }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="venue">Select Venue</label>
+                    <select name="venue" required>
+                        {% for venue in venues %}
+                            <option value="{{ venue }}">{{ venue }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-row triple-inputs">
+                    <div class="form-group">
+                        <label for="target_score">Target Score</label>
+                        <input type="number" name="target_score" placeholder="e.g. 180" value="{{ request.form.get('target_score', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="current_score">Current Score</label>
+                        <input type="number" name="current_score" placeholder="e.g. 122" value="{{ request.form.get('current_score', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="overs_completed">Overs Completed</label>
+                        <input type="number" step="0.1" name="overs_completed" placeholder="e.g. 14.5" value="{{ request.form.get('overs_completed', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="wickets_down">Wickets Down</label>
+                        <input type="number" name="wickets_down" placeholder="e.g. 4" value="{{ request.form.get('wickets_down', '') }}" required>
+                    </div>
+                </div>
+
+                <button class="predict-btn" type="submit">Predict Winning Probability</button>
+            </form>
+
+            {% if prediction %}
+            <div class="result">
+                <div class="win-bar">
+                    <div class="team1" style="width: {{ prediction.team1_win_prob }}%">
+                        {{ prediction.team1 }} ({{ prediction.team1_win_prob }}%)
+                    </div>
+                    <div class="team2" style="width: {{ prediction.team2_win_prob }}%">
+                        {{ prediction.team2 }} ({{ prediction.team2_win_prob }}%)
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if past_predictions %}
+            <div class="result" style="margin-top: 40px;">
+                <h3 style="color: #ffcc00; text-align:center;">🕘 Last 5 Predictions</h3>
+                <table class="past-predictions">
+                    <tr>
+                        <th>Match</th>
+                        <th>Team 1 Win %</th>
+                        <th>Team 2 Win %</th>
+                    </tr>
+                    {% for item in past_predictions %}
+                    <tr>
+                        <td>{{ item.team1 }} vs {{ item.team2 }}</td>
+                        <td>{{ item.team1_win_prob }}%</td>
+                        <td>{{ item.team2_win_prob }}%</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
+
+            <div class="info-icon">
+                ℹ️
+                <div class="tooltip-text">
+                    <strong>Team Name Mapping:</strong><br>
+                    {% for old, new in team_mapping.items() %}
+                        {{ old }} → {{ new }}<br>
+                    {% endfor %}
+                    <br><strong>Instructions:</strong><br>
+                    • Select Batting and Bowling teams<br>
+                    • Provide Venue<br>
+                    • Enter Target, Score, Overs, Wickets<br>
+                    • Click 'Predict' to view win probability
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
