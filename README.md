@@ -1,4 +1,3 @@
-# SmartInnings-IPL-Win-Predictor-Using-Machine-Learning
 
 # 🏏 SmartInnings – IPL Win Predictor Using Machine Learning
 
